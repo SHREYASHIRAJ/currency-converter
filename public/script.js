@@ -17,12 +17,15 @@ async function convert() {
     let res = await fetch(`/api/convert?input_ticker=${from}&output_ticker=${to}&value=${amount}`);
     let data = await res.json();
 
-    if (!res.ok) {
-      throw new Error(data.error || "API request failed");
-    }
+    if (!res.ok) throw new Error(data.error || "API request failed");
 
+    // ✅ Show conversion + rate
     resultBox.className = "success";
-    resultText.innerText = `${amount} ${data.input_ticker} = ${data.converted_value.toFixed(2)} ${data.output_ticker}`;
+    resultText.innerHTML = `
+      💰 ${amount} ${data.input_ticker} = <strong>${data.converted_value.toFixed(2)} ${data.output_ticker}</strong>
+      <br/>
+      📊 1 ${data.input_ticker} = ${data.current_conv_rate.toFixed(4)} ${data.output_ticker}
+    `;
   } catch (err) {
     console.error("Conversion error:", err.message || err);
     resultBox.className = "error";

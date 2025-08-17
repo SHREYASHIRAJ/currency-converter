@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Invalid currency code" });
     }
 
-    // ✅ Calculate converted value
+    // ✅ Proper conversion calculation
     const converted_value = parseFloat(value) * rate;
 
     res.status(200).json({
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
       value: parseFloat(value),
       unix_timestamp: Date.now(),
       current_conv_rate: rate,
-      converted_value, // ✅ added field
+      converted_value, // ✅ final result
     });
   } catch (err) {
     console.error(err);
