@@ -8,21 +8,23 @@
 </head>
 <body>
   <div class="container">
-    <h2>💱 Currency Converter</h2>
+    <h2>Currency Converter</h2>
 
     <div class="form-group">
-      <input type="number" id="amount" placeholder="Enter amount">
+      <input id="amount" type="number" placeholder="Enter amount" />
     </div>
 
     <div class="form-group">
       <select id="input_ticker"></select>
-      <button class="swap-btn" onclick="swapCurrencies()">⮂</button>
+      <button class="swap-btn" onclick="swapCurrencies()">⇄</button>
       <select id="output_ticker"></select>
     </div>
 
     <button onclick="convert()">Convert</button>
 
-    <div id="result-box"></div>
+    <div id="result-box" style="display:none;">
+      <p id="result"></p>
+    </div>
   </div>
 
   <script src="script.js"></script>

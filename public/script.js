@@ -1,69 +1,73 @@
-const currencyList = {
-  "USD": "US Dollar",
-  "EUR": "Euro",
-  "GBP": "British Pound",
-  "INR": "Indian Rupee",
-  "JPY": "Japanese Yen",
-  "AUD": "Australian Dollar",
-  "CAD": "Canadian Dollar",
-  "CHF": "Swiss Franc",
-  "CNY": "Chinese Yuan",
-  "SGD": "Singapore Dollar"
-};
+// Load currency list dynamically
+async function loadCurrencies() {
+  try {
+    let res = await fetch("https://api.exchangerate.host/symbols");
+    let data = await res.json();
 
-window.onload = () => {
-  const inputTicker = document.getElementById("input_ticker");
-  const outputTicker = document.getElementById("output_ticker");
+    if (!data.symbols) throw new Error("Failed to load currency list");
 
-  for (let code in currencyList) {
-    let option1 = document.createElement("option");
-    option1.value = code;
-    option1.textContent = `${code} - ${currencyList[code]}`;
-    inputTicker.appendChild(option1);
+    let inputSelect = document.getElementById("input_ticker");
+    let outputSelect = document.getElementById("output_ticker");
 
-    let option2 = document.createElement("option");
-    option2.value = code;
-    option2.textContent = `${code} - ${currencyList[code]}`;
-    outputTicker.appendChild(option2);
+    Object.keys(data.symbols).forEach(code => {
+      let option1 = document.createElement("option");
+      option1.value = code;
+      option1.text = `${code} - ${data.symbols[code].description}`;
+      inputSelect.appendChild(option1);
+
+      let option2 = document.createElement("option");
+      option2.value = code;
+      option2.text = `${code} - ${data.symbols[code].description}`;
+      outputSelect.appendChild(option2);
+    });
+
+    // Default values
+    inputSelect.value = "USD";
+    outputSelect.value = "INR";
+  } catch (err) {
+    console.error("Currency load error:", err.message);
   }
+}
 
-  inputTicker.value = "USD";
-  outputTicker.value = "INR";
-};
-
+// Convert currency
 async function convert() {
-  const amount = document.getElementById("amount").value;
-  const from = document.getElementById("input_ticker").value;
-  const to = document.getElementById("output_ticker").value;
-  const resultBox = document.getElementById("result-box");
+  let amount = parseFloat(document.getElementById("amount").value);
+  let from = document.getElementById("input_ticker").value;
+  let to = document.getElementById("output_ticker").value;
+  let resultBox = document.getElementById("result-box");
+  let resultText = document.getElementById("result");
 
-  if (!amount || amount <= 0) {
-    resultBox.textContent = "⚠️ Please enter a valid amount.";
+  resultBox.style.display = "block";
+
+  if (isNaN(amount) || amount <= 0) {
     resultBox.className = "error";
-    resultBox.style.display = "block";
+    resultText.innerText = "⚠️ Please enter a valid amount.";
     return;
   }
 
   try {
-    // ✅ exchangerate.host free API (no key, no CORS issues)
-    const res = await fetch(`https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`);
-    const data = await res.json();
+    let res = await fetch(`https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`);
+    let data = await res.json();
 
-    if (!data.result) throw new Error("Invalid conversion response");
+    if (!data.result) throw new Error("Conversion failed");
 
-    resultBox.textContent = `${amount} ${from} = ${data.result.toFixed(2)} ${to}`;
     resultBox.className = "success";
-    resultBox.style.display = "block";
+    resultText.innerText = `${amount} ${from} = ${data.result.toFixed(2)} ${to}`;
   } catch (err) {
-    resultBox.textContent = `❌ Error: ${err.message}`;
+    console.error("Conversion error:", err.message);
     resultBox.className = "error";
-    resultBox.style.display = "block";
-    console.error("Conversion error:", err.message || err);
+    resultText.innerText = "❌ Error fetching conversion rates.";
   }
 }
 
+// Swap currencies
 function swapCurrencies() {
-  const from = document.getElementById("input_ticker");
-  const to = document.getElementById("output_ticker");
-  [from.value, to.value] = [to.value, from.value];
+  let input = document.getElementById("input_ticker");
+  let output = document.getElementById("output_ticker");
+  let temp = input.value;
+  input.value = output.value;
+  output.value = temp;
 }
+
+// Load on page start
+window.onload = loadCurrencies;
