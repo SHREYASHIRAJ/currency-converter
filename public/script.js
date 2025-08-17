@@ -32,12 +32,14 @@ window.onload = () => {
 };
 
 async function convert() {
-  const amount = document.getElementById("amount").value;
+  let amountInput = document.getElementById("amount").value.trim();
+  let amount = parseFloat(amountInput.replace(/[^0-9.]/g, "")); // clean number only
+
   const from = document.getElementById("input_ticker").value;
   const to = document.getElementById("output_ticker").value;
   const resultBox = document.getElementById("result-box");
 
-  if (!amount || amount <= 0) {
+  if (isNaN(amount) || amount <= 0) {
     resultBox.textContent = "⚠️ Please enter a valid amount.";
     resultBox.className = "error";
     resultBox.style.display = "block";
@@ -45,11 +47,10 @@ async function convert() {
   }
 
   try {
-    // ✅ exchangerate.host free API (no key, no CORS issues)
-    const res = await fetch(`https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`);
+    const res = await fetch(`/api/convert?from=${from}&to=${to}&amount=${amount}`);
     const data = await res.json();
 
-    if (!data.result) throw new Error("Invalid conversion response");
+    if (!res.ok) throw new Error(data.error || "API request failed");
 
     resultBox.textContent = `${amount} ${from} = ${data.result.toFixed(2)} ${to}`;
     resultBox.className = "success";

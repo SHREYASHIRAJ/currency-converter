@@ -1,4 +1,3 @@
-// api/convert.js
 export default async function handler(req, res) {
   try {
     res.setHeader("Access-Control-Allow-Origin", "*"); // allow all origins
@@ -15,16 +14,17 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Missing required query params" });
     }
 
+    // call Frankfurter API
     const response = await fetch(
-      `https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`
+      `https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`
     );
     const data = await response.json();
 
-    if (!data.success) {
+    if (!data.rates || !data.rates[to]) {
       throw new Error("Conversion failed from external API");
     }
 
-    res.status(200).json({ result: data.result });
+    res.status(200).json({ result: data.rates[to] });
   } catch (err) {
     console.error("Server Error:", err.message || err);
     res.status(500).json({ error: err.message || "Internal Server Error" });
