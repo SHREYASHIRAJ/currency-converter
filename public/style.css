@@ -1,4 +1,4 @@
-/* Basic Reset */
+/* Reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -16,10 +16,10 @@ body {
 }
 
 .container {
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   padding: 40px;
   border-radius: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
   text-align: center;
   width: 320px;
 }
@@ -28,10 +28,11 @@ h2 {
   margin-bottom: 25px;
   font-size: 1.8rem;
   color: #fff;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 }
 
-input, select {
+input,
+select {
   width: 100%;
   padding: 10px;
   margin: 10px 0;
@@ -63,7 +64,7 @@ button:hover {
   font-size: 1.2rem;
   font-weight: bold;
   color: #ffd700;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 /* Responsive */
