@@ -1,23 +1,31 @@
 async function convert() {
-  const amount = document.getElementById("amount").value;
-  const from = document.getElementById("input_ticker").value;
-  const to = document.getElementById("output_ticker").value;
+  let amount = document.getElementById("amount").value;
+  let from = document.getElementById("input_ticker").value;
+  let to = document.getElementById("output_ticker").value;
+  let resultBox = document.getElementById("result-box");
+  let resultText = document.getElementById("result");
 
-  if (!amount) {
-    alert("Please enter an amount");
+  resultBox.style.display = "block"; // Show result area
+
+  if (!amount || amount <= 0) {
+    resultBox.className = "error";
+    resultText.innerText = "⚠️ Please enter a valid amount.";
     return;
   }
 
   try {
-    const res = await fetch(`/api/convert?input_ticker=${from}&output_ticker=${to}&value=${amount}`);
-    if (!res.ok) throw new Error("API request failed");
+    let res = await fetch(`/api/convert?input_ticker=${from}&output_ticker=${to}&value=${amount}`);
+    let data = await res.json();
 
-    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || "API request failed");
+    }
 
-    document.getElementById("result").innerText =
-      `${amount} ${data.input_ticker} = ${(data.value * data.current_conv_rate).toFixed(2)} ${data.output_ticker}`;
+    resultBox.className = "success";
+    resultText.innerText = `${amount} ${data.input_ticker} = ${data.converted_value.toFixed(2)} ${data.output_ticker}`;
   } catch (err) {
-    console.error(err);
-    alert("Error fetching conversion rates.");
+    console.error("Conversion error:", err.message || err);
+    resultBox.className = "error";
+    resultText.innerText = "❌ " + (err.message || "Error fetching conversion rates.");
   }
 }

@@ -5,6 +5,10 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Missing query parameters" });
   }
 
+  if (isNaN(value) || value <= 0) {
+    return res.status(400).json({ error: "Amount must be a positive number" });
+  }
+
   try {
     const response = await fetch(
       `https://api.exchangerate.host/latest?base=${input_ticker}&symbols=${output_ticker}`
@@ -25,11 +29,12 @@ export default async function handler(req, res) {
       input_ticker,
       output_ticker,
       value: parseFloat(value),
-      unix_timestamp: Date.now(),
+      converted_value: parseFloat(value) * rate,
       current_conv_rate: rate,
+      unix_timestamp: Date.now(),
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Failed to fetch conversion rate" });
+    res.status(500).json({ error: "Unexpected server error" });
   }
 }

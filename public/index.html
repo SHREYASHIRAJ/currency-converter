@@ -1,28 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Currency Converter</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="/style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💱 Currency Converter</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div class="container">
-    <h2>Currency Converter</h2>
-    <input id="amount" type="number" placeholder="Enter amount" />
-    <select id="input_ticker">
-      <option value="USD">USD</option>
-      <option value="EUR">EUR</option>
-      <option value="INR">INR</option>
-    </select>
-    <select id="output_ticker">
-      <option value="INR">INR</option>
-      <option value="USD">USD</option>
-      <option value="EUR">EUR</option>
-    </select>
+    <h2>💱 Currency Converter</h2>
+
+    <div class="form-group">
+      <input id="amount" type="number" placeholder="Enter amount" />
+    </div>
+
+    <div class="form-group">
+      <select id="input_ticker">
+        <option value="USD">USD - US Dollar</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="INR">INR - Indian Rupee</option>
+        <option value="GBP">GBP - British Pound</option>
+        <option value="JPY">JPY - Japanese Yen</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <select id="output_ticker">
+        <option value="INR">INR - Indian Rupee</option>
+        <option value="USD">USD - US Dollar</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="GBP">GBP - British Pound</option>
+        <option value="JPY">JPY - Japanese Yen</option>
+      </select>
+    </div>
+
     <button onclick="convert()">Convert</button>
-    <p id="result"></p>
+
+    <!-- Result Box -->
+    <div id="result-box">
+      <p id="result"></p>
+    </div>
   </div>
 
   <script src="/script.js" defer></script>
