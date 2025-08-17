@@ -9,8 +9,8 @@ async function convert() {
   }
 
   try {
-    // Use your Vercel API endpoint or local API
     let res = await fetch(`/api/convert?input_ticker=${from}&output_ticker=${to}&value=${amount}`);
+    if (!res.ok) throw new Error("API request failed");
     let data = await res.json();
 
     document.getElementById("result").innerText =

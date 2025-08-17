@@ -8,7 +8,6 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Use backticks for template literals
     const response = await fetch(`https://api.exchangerate.host/latest?base=${input_ticker}&symbols=${output_ticker}`);
     const data = await response.json();
 
