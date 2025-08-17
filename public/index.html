@@ -9,32 +9,37 @@
 </head>
 <body>
   <div class="container">
-    <h2>💱 Currency Converter</h2>
+    <h2>🌍 Currency Converter</h2>
 
     <!-- Amount input -->
-    <input id="amount" type="number" placeholder="Enter amount" />
+    <div class="form-group">
+      <input id="amount" type="number" placeholder="Enter amount" />
+    </div>
 
-    <!-- From currency -->
-    <select id="input_ticker">
-      <option value="USD">USD</option>
-      <option value="EUR">EUR</option>
-      <option value="INR">INR</option>
-      <option value="GBP">GBP</option>
-      <option value="JPY">JPY</option>
-    </select>
+    <!-- Currency selectors with swap -->
+    <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
+      <select id="input_ticker" style="flex:1;">
+        <option value="USD">USD - US Dollar</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="INR">INR - Indian Rupee</option>
+        <option value="GBP">GBP - British Pound</option>
+        <option value="JPY">JPY - Japanese Yen</option>
+      </select>
 
-    <!-- To currency -->
-    <select id="output_ticker">
-      <option value="INR">INR</option>
-      <option value="USD">USD</option>
-      <option value="EUR">EUR</option>
-      <option value="GBP">GBP</option>
-      <option value="JPY">JPY</option>
-    </select>
+      <!-- Swap button -->
+      <button id="swap-btn" type="button" style="padding: 8px 12px;">🔄</button>
 
-    <!-- Buttons -->
+      <select id="output_ticker" style="flex:1;">
+        <option value="INR">INR - Indian Rupee</option>
+        <option value="USD">USD - US Dollar</option>
+        <option value="EUR">EUR - Euro</option>
+        <option value="GBP">GBP - British Pound</option>
+        <option value="JPY">JPY - Japanese Yen</option>
+      </select>
+    </div>
+
+    <!-- Convert button -->
     <button onclick="convert()">Convert</button>
-    <button onclick="swapCurrencies()">🔄 Swap</button>
 
     <!-- Result box -->
     <div id="result-box" style="display:none;" class="result-box">
