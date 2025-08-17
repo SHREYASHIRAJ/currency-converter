@@ -1,10 +1,9 @@
 {
   "name": "currency-converter",
   "version": "1.0.0",
+  "main": "index.js",
   "scripts": {
     "start": "vercel dev"
   },
-  "dependencies": {
-    "node-fetch": "^3.3.2"
-  }
+  "dependencies": {}
 }
