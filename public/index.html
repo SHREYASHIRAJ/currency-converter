@@ -3,46 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>💱 Currency Converter</title>
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="/style.css">
+  <title>Currency Converter</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <h2>💱 Currency Converter</h2>
 
-    <div class="form-group">
-      <input id="amount" type="number" placeholder="Enter amount" />
-    </div>
+    <input type="number" id="amount" placeholder="Enter amount">
 
-    <div class="form-group">
+    <div class="input-row">
       <select id="input_ticker">
-        <option value="USD">USD - US Dollar</option>
-        <option value="EUR">EUR - Euro</option>
-        <option value="INR">INR - Indian Rupee</option>
-        <option value="GBP">GBP - British Pound</option>
-        <option value="JPY">JPY - Japanese Yen</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="INR">INR</option>
+        <option value="GBP">GBP</option>
+        <option value="JPY">JPY</option>
       </select>
-    </div>
 
-    <div class="form-group">
+      <button class="swap-btn" onclick="swapCurrencies()">⟲</button>
+
       <select id="output_ticker">
-        <option value="INR">INR - Indian Rupee</option>
-        <option value="USD">USD - US Dollar</option>
-        <option value="EUR">EUR - Euro</option>
-        <option value="GBP">GBP - British Pound</option>
-        <option value="JPY">JPY - Japanese Yen</option>
+        <option value="INR">INR</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="JPY">JPY</option>
       </select>
     </div>
 
-    <button onclick="convert()">Convert</button>
+    <button class="convert-btn" onclick="convert()">Convert</button>
 
-    <!-- Result Box -->
-    <div id="result-box">
-      <p id="result"></p>
-    </div>
+    <div id="result" class="result-box"></div>
   </div>
 
-  <script src="/script.js" defer></script>
+  <script src="script.js"></script>
 </body>
 </html>
