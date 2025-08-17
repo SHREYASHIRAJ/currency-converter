@@ -9,10 +9,11 @@ async function convert() {
   }
 
   try {
+    // Use your Vercel API endpoint or local API
     let res = await fetch(`/api/convert?input_ticker=${from}&output_ticker=${to}&value=${amount}`);
     let data = await res.json();
 
-    document.getElementById("result").innerText = 
+    document.getElementById("result").innerText =
       `${data.value} ${data.input_ticker} = ${(data.value * data.current_conv_rate).toFixed(2)} ${data.output_ticker}`;
   } catch (err) {
     console.error(err);
