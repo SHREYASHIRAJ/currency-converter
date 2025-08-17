@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 export default async function handler(req, res) {
   const { input_ticker, output_ticker, value } = req.query;
 
@@ -8,19 +6,30 @@ export default async function handler(req, res) {
   }
 
   try {
-    const response = await fetch(`https://api.exchangerate.host/latest?base=${input_ticker}&symbols=${output_ticker}`);
-    const data = await response.json();
+    const response = await fetch(
+      `https://api.exchangerate.host/latest?base=${input_ticker}&symbols=${output_ticker}`
+    );
 
-    const rate = data.rates[output_ticker];
+    if (!response.ok) {
+      return res.status(500).json({ error: "Failed to fetch conversion rate" });
+    }
+
+    const data = await response.json();
+    const rate = data?.rates?.[output_ticker];
+
+    if (!rate) {
+      return res.status(400).json({ error: "Invalid currency code" });
+    }
 
     res.status(200).json({
       input_ticker,
       output_ticker,
       value: parseFloat(value),
       unix_timestamp: Date.now(),
-      current_conv_rate: rate
+      current_conv_rate: rate,
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Failed to fetch conversion rate" });
   }
 }
