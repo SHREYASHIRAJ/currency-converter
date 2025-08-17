@@ -3,33 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Currency Converter</title>
+  <title>💱 Currency Converter</title>
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div class="container">
-    <h2>🌍 Currency Converter</h2>
+    <h2>💱 Currency Converter</h2>
 
-    <!-- Amount input -->
     <div class="form-group">
       <input id="amount" type="number" placeholder="Enter amount" />
     </div>
 
-    <!-- Currency selectors with swap -->
-    <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
-      <select id="input_ticker" style="flex:1;">
+    <div class="form-group">
+      <select id="input_ticker">
         <option value="USD">USD - US Dollar</option>
         <option value="EUR">EUR - Euro</option>
         <option value="INR">INR - Indian Rupee</option>
         <option value="GBP">GBP - British Pound</option>
         <option value="JPY">JPY - Japanese Yen</option>
       </select>
+    </div>
 
-      <!-- Swap button -->
-      <button id="swap-btn" type="button" style="padding: 8px 12px;">🔄</button>
-
-      <select id="output_ticker" style="flex:1;">
+    <div class="form-group">
+      <select id="output_ticker">
         <option value="INR">INR - Indian Rupee</option>
         <option value="USD">USD - US Dollar</option>
         <option value="EUR">EUR - Euro</option>
@@ -38,11 +35,10 @@
       </select>
     </div>
 
-    <!-- Convert button -->
     <button onclick="convert()">Convert</button>
 
-    <!-- Result box -->
-    <div id="result-box" style="display:none;" class="result-box">
+    <!-- Result Box -->
+    <div id="result-box">
       <p id="result"></p>
     </div>
   </div>
