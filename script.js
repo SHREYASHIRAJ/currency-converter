@@ -9,13 +9,16 @@ async function convert() {
   }
 
   try {
-    const res = await fetch(`https://api.exchangerate-api.com/v4/latest/${from}`);
+    const res = await fetch(`/api/convert?input_ticker=${from}&value=${amount}&output_ticker=${to}`);
     const data = await res.json();
 
-    const rate = data.rates[to];
-    const result = (amount * rate).toFixed(2);
+    if (data.error) {
+      alert(data.error);
+      return;
+    }
 
-    document.getElementById("result").innerText = `${amount} ${from} = ${result} ${to}`;
+    document.getElementById("result").innerText =
+      `${data.value} ${data.input_ticker} = ${data.converted_value} ${data.output_ticker} (Rate: ${data.current_conv_rate})`;
   } catch (err) {
     console.error(err);
     alert("Error fetching conversion rates.");
