@@ -1,47 +1,32 @@
 // api/convert.js
-import fetch from "node-fetch"; // add this if your Node version < 18
-
 export default async function handler(req, res) {
-  const { input_ticker, output_ticker, value } = req.query;
-
-  // Validate query
-  if (!input_ticker || !output_ticker || !value) {
-    return res.status(400).json({ error: "Missing query parameters" });
-  }
-
   try {
-    // Call external API
+    res.setHeader("Access-Control-Allow-Origin", "*"); // allow all origins
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+
+    if (req.method === "OPTIONS") {
+      return res.status(200).end(); // quick response for preflight
+    }
+
+    const { from, to, amount } = req.query;
+
+    if (!from || !to || !amount) {
+      return res.status(400).json({ error: "Missing required query params" });
+    }
+
     const response = await fetch(
-      `https://api.exchangerate.host/latest?base=${input_ticker}&symbols=${output_ticker}`
+      `https://api.exchangerate.host/convert?from=${from}&to=${to}&amount=${amount}`
     );
-
-    if (!response.ok) {
-      return res.status(500).json({ error: "Failed to fetch conversion rate" });
-    }
-
     const data = await response.json();
-    const rate = data?.rates?.[output_ticker];
 
-    if (!rate) {
-      return res.status(400).json({ error: "Invalid currency code" });
+    if (!data.success) {
+      throw new Error("Conversion failed from external API");
     }
 
-    // Conversion
-    const converted_value = parseFloat(value) * rate;
-
-    return res.status(200).json({
-      input_ticker,
-      output_ticker,
-      value: parseFloat(value),
-      unix_timestamp: Date.now(),
-      current_conv_rate: rate,
-      converted_value,
-    });
+    res.status(200).json({ result: data.result });
   } catch (err) {
-    console.error("API Error:", err.message || err);
-    return res.status(500).json({
-      error: "Internal server error",
-      details: err.message || "Unknown error",
-    });
+    console.error("Server Error:", err.message || err);
+    res.status(500).json({ error: err.message || "Internal Server Error" });
   }
 }
