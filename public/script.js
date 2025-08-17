@@ -1,14 +1,15 @@
 async function convert() {
   let amountInput = document.getElementById("amount").value.trim();
+
+  // Only allow numbers and decimal
+  let amount = parseFloat(amountInput.replace(/[^0-9.]/g, "")); 
+
   let from = document.getElementById("input_ticker").value;
   let to = document.getElementById("output_ticker").value;
   let resultBox = document.getElementById("result-box");
   let resultText = document.getElementById("result");
 
-  resultBox.style.display = "block";
-
-  // Force numeric only
-  let amount = Number(amountInput);
+  resultBox.style.display = "block"; // Show result area
 
   if (isNaN(amount) || amount <= 0) {
     resultBox.className = "error";
@@ -17,10 +18,8 @@ async function convert() {
   }
 
   try {
-    let res = await fetch(
-      `/api/convert?input_ticker=${encodeURIComponent(from)}&output_ticker=${encodeURIComponent(to)}&value=${amount}`
-    );
-
+    // ✅ Proper fetch (no weird :1)
+    let res = await fetch(`/api/convert?input_ticker=${encodeURIComponent(from)}&output_ticker=${encodeURIComponent(to)}&value=${amount}`);
     let data = await res.json();
 
     if (!res.ok) {
@@ -36,7 +35,7 @@ async function convert() {
   }
 }
 
-// Swap currencies
+// ✅ Swap button handler
 function swapCurrencies() {
   let from = document.getElementById("input_ticker");
   let to = document.getElementById("output_ticker");
