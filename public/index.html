@@ -10,31 +10,19 @@
   <div class="container">
     <h2>💱 Currency Converter</h2>
 
-    <input type="number" id="amount" placeholder="Enter amount">
-
-    <div class="input-row">
-      <select id="input_ticker">
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="INR">INR</option>
-        <option value="GBP">GBP</option>
-        <option value="JPY">JPY</option>
-      </select>
-
-      <button class="swap-btn" onclick="swapCurrencies()">🔄</button>
-
-      <select id="output_ticker">
-        <option value="INR">INR</option>
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="GBP">GBP</option>
-        <option value="JPY">JPY</option>
-      </select>
+    <div class="form-group">
+      <input type="number" id="amount" placeholder="Enter amount">
     </div>
 
-    <button class="convert-btn" onclick="convert()">Convert</button>
+    <div class="form-group">
+      <select id="input_ticker"></select>
+      <button class="swap-btn" onclick="swapCurrencies()">⮂</button>
+      <select id="output_ticker"></select>
+    </div>
 
-    <div id="result" class="result-box"></div>
+    <button onclick="convert()">Convert</button>
+
+    <div id="result-box"></div>
   </div>
 
   <script src="script.js"></script>
