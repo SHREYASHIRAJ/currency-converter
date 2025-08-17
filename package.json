@@ -6,6 +6,19 @@
     "start": "vercel dev"
   },
   "dependencies": {
-    "node-fetch": "^2.6.7"
-  }
+    "express": "^5.1.0",
+    "node-fetch": "^2.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SHREYASHIRAJ/currency-converter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SHREYASHIRAJ/currency-converter/issues"
+  },
+  "homepage": "https://github.com/SHREYASHIRAJ/currency-converter#readme",
+  "description": ""
 }

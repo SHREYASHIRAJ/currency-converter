@@ -14,7 +14,7 @@ async function convert() {
     let data = await res.json();
 
     document.getElementById("result").innerText =
-      `${data.value} ${data.input_ticker} = ${(data.value * data.current_conv_rate).toFixed(2)} ${data.output_ticker}`;
+      `${amount} ${data.input_ticker} = ${data.converted_value.toFixed(2)} ${data.output_ticker}`;
   } catch (err) {
     console.error(err);
     alert("Error fetching conversion rates.");
