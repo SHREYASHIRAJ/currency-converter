@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currency Converter</title>
+</head>
+<body>
+  <h2>Currency Converter</h2>
+  
+  <input id="amount" type="number" placeholder="Enter amount" />
+  
+  <select id="input_ticker">
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+    <option value="INR">INR</option>
+  </select>
+  
+  <select id="output_ticker">
+    <option value="INR">INR</option>
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+  </select>
+  
+  <button onclick="convert()">Convert</button>
+  
+  <p id="result"></p>
+  
+  <!-- Use relative path with ./ to ensure it works on Vercel -->
+  <script src="./script.js" defer></script>
+</body>
+</html>
