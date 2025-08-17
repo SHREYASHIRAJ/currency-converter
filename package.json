@@ -1,10 +1,11 @@
 {
-  "name": "currency-converter",
-  "version": "1.0.0",
+  "name": "currency-conversion-api",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vercel dev",
-    "start": "vercel dev"
+    "start": "vercel dev",
+    "build": "echo \"Vercel builds serverless functions automatically\""
   },
   "dependencies": {}
 }
