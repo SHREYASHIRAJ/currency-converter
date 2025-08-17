@@ -4,43 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Currency Converter</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
   <div class="container">
     <h2>💱 Currency Converter</h2>
 
+    <!-- Amount input -->
     <input id="amount" type="number" placeholder="Enter amount" />
 
-    <div class="form-group">
-      <select id="input_ticker">
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="INR">INR</option>
-        <option value="GBP">GBP</option>
-        <option value="JPY">JPY</option>
-      </select>
+    <!-- From currency -->
+    <select id="input_ticker">
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="INR">INR</option>
+      <option value="GBP">GBP</option>
+      <option value="JPY">JPY</option>
+    </select>
 
-      <!-- swap button -->
-      <button type="button" onclick="swapCurrencies()" class="swap-btn">🔄</button>
+    <!-- To currency -->
+    <select id="output_ticker">
+      <option value="INR">INR</option>
+      <option value="USD">USD</option>
+      <option value="EUR">EUR</option>
+      <option value="GBP">GBP</option>
+      <option value="JPY">JPY</option>
+    </select>
 
-      <select id="output_ticker">
-        <option value="INR">INR</option>
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="GBP">GBP</option>
-        <option value="JPY">JPY</option>
-      </select>
-    </div>
-
+    <!-- Buttons -->
     <button onclick="convert()">Convert</button>
+    <button onclick="swapCurrencies()">🔄 Swap</button>
 
-    <!-- result box -->
+    <!-- Result box -->
     <div id="result-box" style="display:none;" class="result-box">
       <p id="result"></p>
     </div>
   </div>
 
-  <script src="script.js" defer></script>
+  <script src="/script.js" defer></script>
 </body>
 </html>

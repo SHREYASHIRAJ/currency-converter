@@ -1,39 +1,39 @@
-async function convert() {
-  let amountInput = document.getElementById("amount").value.trim();
-  let from = document.getElementById("input_ticker").value;
-  let to = document.getElementById("output_ticker").value;
-  let resultBox = document.getElementById("result-box");
-  let resultText = document.getElementById("result");
+export default async function handler(req, res) {
+  const { input_ticker, output_ticker, value } = req.query;
 
-  // Make sure the result box shows up
-  resultBox.style.display = "block";
-
-  // Convert input to a valid float
-  let amount = parseFloat(amountInput);
-
-  if (isNaN(amount) || amount <= 0) {
-    resultBox.className = "error";
-    resultText.innerText = "⚠️ Please enter a valid amount.";
-    return;
+  if (!input_ticker || !output_ticker || !value) {
+    return res.status(400).json({ error: "Missing query parameters" });
   }
 
   try {
-    // ✅ Ensure query param is a clean number (no extra characters)
-    let res = await fetch(
-      `/api/convert?input_ticker=${encodeURIComponent(from)}&output_ticker=${encodeURIComponent(to)}&value=${amount}`
+    const response = await fetch(
+      `https://api.exchangerate.host/latest?base=${input_ticker}&symbols=${output_ticker}`
     );
 
-    let data = await res.json();
-
-    if (!res.ok) {
-      throw new Error(data.error || "API request failed");
+    if (!response.ok) {
+      return res.status(500).json({ error: "Failed to fetch conversion rate" });
     }
 
-    resultBox.className = "success";
-    resultText.innerText = `${amount} ${data.input_ticker} = ${data.converted_value.toFixed(2)} ${data.output_ticker}`;
+    const data = await response.json();
+    const rate = data?.rates?.[output_ticker];
+
+    if (!rate) {
+      return res.status(400).json({ error: "Invalid currency code" });
+    }
+
+    // Proper conversion
+    const converted_value = parseFloat(value) * rate;
+
+    res.status(200).json({
+      input_ticker,
+      output_ticker,
+      value: parseFloat(value),
+      unix_timestamp: Date.now(),
+      current_conv_rate: rate,
+      converted_value,
+    });
   } catch (err) {
-    console.error("Conversion error:", err.message || err);
-    resultBox.className = "error";
-    resultText.innerText = "❌ " + (err.message || "Error fetching conversion rates.");
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch conversion rate" });
   }
 }

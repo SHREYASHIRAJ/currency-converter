@@ -1,15 +1,14 @@
 async function convert() {
   let amountInput = document.getElementById("amount").value.trim();
-  let amount = parseFloat(amountInput);
-
   let from = document.getElementById("input_ticker").value;
   let to = document.getElementById("output_ticker").value;
   let resultBox = document.getElementById("result-box");
   let resultText = document.getElementById("result");
 
   resultBox.style.display = "block";
-  resultBox.className = "info";
-  resultText.innerText = "⏳ Converting...";
+
+  // Force numeric only
+  let amount = Number(amountInput);
 
   if (isNaN(amount) || amount <= 0) {
     resultBox.className = "error";
@@ -18,11 +17,14 @@ async function convert() {
   }
 
   try {
-    let res = await fetch(`/api/convert?input_ticker=${from}&output_ticker=${to}&value=${amount}`);
+    let res = await fetch(
+      `/api/convert?input_ticker=${encodeURIComponent(from)}&output_ticker=${encodeURIComponent(to)}&value=${amount}`
+    );
+
     let data = await res.json();
 
-    if (!res.ok || !data.converted_value) {
-      throw new Error(data.error || "Conversion failed. Please check the currencies.");
+    if (!res.ok) {
+      throw new Error(data.error || "API request failed");
     }
 
     resultBox.className = "success";
@@ -34,17 +36,12 @@ async function convert() {
   }
 }
 
+// Swap currencies
 function swapCurrencies() {
   let from = document.getElementById("input_ticker");
   let to = document.getElementById("output_ticker");
 
-  // Swap values
   let temp = from.value;
   from.value = to.value;
   to.value = temp;
-
-  // Auto re-run conversion if amount is filled
-  if (document.getElementById("amount").value.trim()) {
-    convert();
-  }
 }
